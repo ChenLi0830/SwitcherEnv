@@ -1,0 +1,58 @@
+resources:
+  device: cpu
+debugging:
+  logdir: log
+  logger: tensorboard
+  wandb_project: mujoco.benchmark
+  seed: 0
+running:
+  resume_id: null
+  resume_path: null
+rollouts:
+  num_envs_per_worker: 4
+  minibatch_size: 64
+  # For on-policy algos, buffer_size and step_per_collect should
+  # be the same
+  buffer_size: 2048
+  # this will be the batch_size
+  # rollout length for each env will be step_per_collect/num_envs
+  step_per_collect: 2048
+  step_per_epoch: 30000
+environment:
+  # env: HalfCheetah-v4
+  env: SwitcherEnv
+  obs_norm: true
+evaluation:
+  eval_num_envs_per_worker: 10
+  render: 0.0
+training:
+  max_epoch: 100
+  # paper what matters on-policy trick; for on-policy must be 1;
+  # recompute self.critic(obs) after each minibatch update
+  recompute_adv: 1
+  # per minibatch adv normalization
+  norm_adv: 0
+  # used in _compute_returns
+  rew_norm: true
+  # clip, tanh or ''
+  bound_action_method: clip
+  # max_grad_norm: clipping sgd grads. default to null
+  max_grad_norm: 0.5
+  ent_coef: 0.0
+  vf_coef: 0.25
+  gae_lambda: 0.95
+  gamma: 0.99
+  lr: 0.0003
+  lr_decay: true
+  repeat_per_collect: 10 # num of sgd for each collect
+  ## ppo specific
+  eps_clip: 0.2 # ppo clip ratio
+  # two sigma paperv3 arXiv:1811.02553v3 Sec. 4.1.
+  value_clip: True
+  # MOBA paper arXiv:1912.09729 Equ. 5
+  # default 5.0, should be > 1.0. set to None if unwanted
+  dual_clip: null
+model:
+  hidden_sizes:
+    - 128
+    - 128
