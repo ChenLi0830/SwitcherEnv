@@ -11,13 +11,12 @@ import numpy as np
 from tianshou.env import DummyVectorEnv, VectorEnvNormObs
 
 NUM_FEATURES = 5  # change this number to how many columns other than 'timestamp' and 'reward'
-
+client = MongoClient("mongodb://localhost:27017/")
+db = client["sample_data"]
 
 class DataLoader:
 
   def __init__(self, start_date, num):
-    client = MongoClient("mongodb://localhost:27017/")
-    db = client["sample_data"]
     self.candle_collection = db["candles"]
     self.num = num
     self.buffer = []

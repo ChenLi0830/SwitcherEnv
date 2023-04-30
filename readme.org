@@ -1,0 +1,18 @@
+* Installation
+
+1. Install mongodb docker
+2. create mongodb docker
+3. install requirements.txt
+
+* Setup
+1. Ingest data. For sample data generation, see
+   ~generate_data.py~. Notice that there must be ~timestamp~ (in
+   per hour frequency) and ~reward~ column. Other factors can be
+   named arbitrarily.
+2. In ~SwitcherEnv.py~, change ~NUM_FEATURES~ to number of
+   features in the dataset.
+3. In ~switcher_learner.py~ set start_date (set to None for
+   random start_date); lstm_lag_steps = 10 # 10 units of
+   frequency e.g., 1h, 12h.
+4. Run ~switcher_learner.py~
+

@@ -177,6 +177,7 @@ def test_ppo(config):
     torch.save(state, os.path.join(log_path, "policy.pth"))
 
   # trainer
+  print('running')
   result = onpolicy_trainer(
       policy,
       train_collector,
