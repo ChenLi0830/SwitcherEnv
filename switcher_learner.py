@@ -78,7 +78,7 @@ def test_ppo(config):
             preprocess_net_output_dim=config.action_shape,
             device=None).to(config.device))
     critic = DataParallelNet(
-        Critic(net_c, preprocess_net_output_dim=1,
+        Critic(net_c, preprocess_net_output_dim=2,
                device=None).to(config.device))
   else:
     actor = Actor(
@@ -87,7 +87,7 @@ def test_ppo(config):
         preprocess_net_output_dim=config.action_shape,
         device=config.device).to(config.device)
     critic = Critic(
-        net_a, preprocess_net_output_dim=1,
+        net_a, preprocess_net_output_dim=2,
         device=config.device).to(config.device)
 
   # NN Initialization
@@ -178,6 +178,7 @@ def test_ppo(config):
 
   # trainer
   print('running')
+  test_collector = None
   result = onpolicy_trainer(
       policy,
       train_collector,
